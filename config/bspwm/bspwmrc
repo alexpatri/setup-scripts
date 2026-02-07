@@ -17,5 +17,8 @@ xsetroot -cursor_name left_ptr
 
 feh --bg-fill ${HOME}/Images/wallpaper.png
 
+picom &
+
 dunst &
+
 ${HOME}/.config/polybar/grayblocks/launch.sh &
