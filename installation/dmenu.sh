@@ -43,6 +43,12 @@ patch -p1 < "dmenu-xyw-${DMENU_VERSION}.diff"
 # 5) Copiar config padrão para config.h
 cp config.def.h config.h
 
+# Alpha configurável
+DMENU_ALPHA="0xbb"
+
+echo "Configurando alpha = $DMENU_ALPHA"
+sed -i "s/static const unsigned int alpha = 0x[0-9a-fA-F]\+/static const unsigned int alpha = $DMENU_ALPHA/" config.h
+
 # 6) Compilar
 echo "Compilando..."
 make clean

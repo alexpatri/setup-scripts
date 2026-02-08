@@ -1,0 +1,86 @@
+#!/bin/sh
+
+. "$HOME/.cache/wal/colors.sh"
+
+WIDTH=500
+LINES=8
+
+SCREEN_W=$(xrandr | awk '/\*/ {print $1; exit}' | cut -d'x' -f1)
+X=$(( (SCREEN_W - WIDTH) / 2 ))
+Y=65
+
+DIRS="
+$HOME/.local/share/applications
+/usr/local/share/applications
+/usr/share/applications
+"
+
+APPS=$(
+  for d in $DIRS; do
+    [ -d "$d" ] || continue
+
+    find "$d" -type f -name '*.desktop' -print 2>/dev/null |
+    while IFS= read -r f; do
+      awk -v file="$f" '
+  	function trim(s){ sub(/^[ \t]+/, "", s); sub(/[ \t]+$/, "", s); return s }
+  	BEGIN { name=""; nodisplay=0; hidden=0 }
+
+  	/^NoDisplay=/ { nodisplay = (tolower(substr($0,11))=="true") }
+  	/^Hidden=/    { hidden    = (tolower(substr($0,8))=="true") }
+
+  	/^Name=/ && name=="" {
+    	  name = $0
+    	  sub(/^Name=/, "", name)
+    	  sub(/[[:space:]]*\(.*/, "", name)
+    	  name = trim(name)
+  	}
+
+  	END {
+    	  if (name=="" || nodisplay || hidden) exit
+    	  id=file
+    	  sub(/^.*\//,"",id)
+    	  sub(/\.desktop$/,"",id)
+    	  printf "%s\t%s\n", name, id
+  	}
+    ' "$f" 
+    done
+  done | sort -u
+)
+
+CHOICE=$(
+  printf '%s\n' "$APPS" \
+  | cut -f1 \
+  | dmenu -x "$X" -y "$Y" -z "$WIDTH" -l "$LINES" \
+      -sf "$background" -nb "$background" -sb "$foreground" \
+      -p "Apps" -i
+)
+
+[ -n "${CHOICE:-}" ] || exit 0
+
+DESKTOP_ID=$(printf '%s\n' "$APPS" | awk -F'\t' -v sel="$CHOICE" '$1==sel{print $2; exit}')
+[ -n "${DESKTOP_ID:-}" ] || exit 0
+
+# Execução preferida
+if command -v gtk-launch >/dev/null 2>&1; then
+  gtk-launch "$DESKTOP_ID" >/dev/null 2>&1 &
+  exit 0
+fi
+
+# Fallback: localizar .desktop e executar Exec=
+DESKTOP_FILE=""
+for d in $DIRS; do
+  f="$d/${DESKTOP_ID}.desktop"
+  if [ -r "$f" ]; then
+    DESKTOP_FILE="$f"
+    break
+  fi
+done
+[ -n "$DESKTOP_FILE" ] || exit 0
+
+EXEC_LINE=$(awk -F= '$1=="Exec"{print $2; exit}' "$DESKTOP_FILE" \
+  | sed -E 's/[[:space:]]*%[[:alnum:]]+//g; s/[[:space:]]+$//'
+)
+
+[ -n "${EXEC_LINE:-}" ] || exit 0
+nohup sh -c "$EXEC_LINE" >/dev/null 2>&1 &
+
