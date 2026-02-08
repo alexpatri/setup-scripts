@@ -22,3 +22,5 @@ picom &
 dunst &
 
 ${HOME}/.config/polybar/grayblocks/launch.sh &
+    
+${HOME}/.config/polybar/grayblocks/scripts/pywal.sh Images/wallpaper.png

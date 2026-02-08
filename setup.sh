@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 sudo apt update
-sudo apt install bspwm sxhkd polybar dunst alacritty feh xorg picom
+sudo apt install bspwm sxhkd polybar dunst alacritty feh xorg picom pipx
+
+pipx install pywal
 
 mkdir $HOME/.config
 
@@ -15,3 +17,5 @@ cp -r ./config/picom/ $HOME/.config/
 mkdir $HOME/Images
 
 cp ./wallpaper.png $HOME/Images/
+
+wal -i $HOME/Images/wallpaper.png
