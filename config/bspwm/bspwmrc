@@ -22,5 +22,5 @@ picom &
 dunst &
 
 ${HOME}/.config/polybar/grayblocks/launch.sh &
-    
-${HOME}/.config/polybar/grayblocks/scripts/pywal.sh Images/wallpaper.png
+sleep 0.2
+${HOME}/.config/bspwm/scripts/polybar-dock-smart-hide.sh &
