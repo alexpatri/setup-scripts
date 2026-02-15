@@ -12,9 +12,9 @@ mkdir $HOME/.config
 cp -r ./config/bspwm/ $HOME/.config/
 cp -r ./config/alacritty/ $HOME/.config/
 cp -r ./config/picom/ $HOME/.config/
+cp -r ./config/dunst/ $HOME/.config/
 # cp /usr/share/doc/bspwm/examples/sxhkdrc $HOME/.config/sxhkd/
 # cp /etc/polybar/config.ini $HOME/.config/polybar
-# cp /etc/xdg/dunst/dunstrc $HOME/.config/dunst/
 
 mkdir $HOME/Images
 

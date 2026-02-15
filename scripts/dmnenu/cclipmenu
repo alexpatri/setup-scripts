@@ -11,6 +11,8 @@ SCREEN_WIDTH=$(xrandr | awk '/\*/ {print $1}' | head -n1 | cut -d'x' -f1)
 # Calcular largura do menu
 MENU_WIDTH=$((SCREEN_WIDTH - (2 * OFFSET_X)))
 # MENU_WIDTH=$(( SCREEN_WIDTH / 3 ))
+#
+before="$(xclip -o -selection clipboard 2>/dev/null || true)"
 
 clipmenu -i -l 8 \
     -x "$OFFSET_X" \
@@ -20,3 +22,8 @@ clipmenu -i -l 8 \
     -nb "$background" \
     -sb "$foreground"
 
+after="$(xclip -o -selection clipboard 2>/dev/null || true)"
+
+if [ "$after" != "$before" ] && [ -n "$after" ]; then
+  notify-send -a "urgency_low" "Copiado para a área de transferência"
+fi
