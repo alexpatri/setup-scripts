@@ -3,6 +3,8 @@
 sudo apt update
 sudo apt install zsh bspwm sxhkd polybar dunst alacritty feh xorg picom pipx
 
+sudo apt install --reinstall polkitd
+
 pipx install pywal
 
 mkdir $HOME/.config
