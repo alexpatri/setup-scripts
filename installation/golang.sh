@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-GO_VERSION=1.24.4
+GO_VERSION=1.26.0
 GO_TAR=go$GO_VERSION.linux-amd64.tar.gz
 
 if [ $(uname) = "Linux" ]; then

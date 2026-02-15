@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 sudo apt update
-sudo apt install zsh bspwm sxhkd polybar dunst alacritty feh xorg picom pipx
+sudo apt install zsh bspwm sxhkd polybar dunst alacritty feh xorg picom pipx xclip
 
 sudo apt install --reinstall polkitd
 
