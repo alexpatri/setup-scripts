@@ -13,8 +13,8 @@ cp -r ./config/bspwm/ $HOME/.config/
 cp -r ./config/alacritty/ $HOME/.config/
 cp -r ./config/picom/ $HOME/.config/
 cp -r ./config/dunst/ $HOME/.config/
-# cp /usr/share/doc/bspwm/examples/sxhkdrc $HOME/.config/sxhkd/
-# cp /etc/polybar/config.ini $HOME/.config/polybar
+cp -r ./config/sxhkdrc/ $HOME/.config/
+cp -r ./config/polybar/ $HOME/.config/
 
 mkdir $HOME/Images
 
