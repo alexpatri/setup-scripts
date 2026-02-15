@@ -7,7 +7,7 @@ LINES=8
 
 SCREEN_W=$(xrandr | awk '/\*/ {print $1; exit}' | cut -d'x' -f1)
 X=$(( (SCREEN_W - WIDTH) / 2 ))
-Y=65
+Y=62
 
 DIRS="
 $HOME/.local/share/applications

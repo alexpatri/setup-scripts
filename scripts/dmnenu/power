@@ -6,7 +6,7 @@ WIDTH=500
 
 SCREEN_W=$(xrandr | awk '/\*/ {print $1; exit}' | cut -d'x' -f1)
 X=$(( (SCREEN_W - WIDTH) / 2 ))
-Y=65
+Y=62
 
 case "$(printf "kill\nsleep\nreboot\nshutdown" | dmenu -i -x $X -y $Y -z $WIDTH -l 4 -sf "$background" -nb "$background" -sb "$foreground")" in
 	kill) ps -u "$USER" -o pid,comm,%cpu,%mem | dmenu -i -x $X -y $Y -z $WIDTH -l 10 -sf "$background" -nb "$background" -sb "$foreground" -p Kill: | awk '{print $1}' | xargs -r kill ;;
